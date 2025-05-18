@@ -7,7 +7,6 @@ const JUMP_VELOCITY = -100.0
 @onready var animated_sprite = $AnimatedSprite2D
 
 func _process(_delta):
-
 	var direction = Vector2()
 	var movement_speed = 1
 	

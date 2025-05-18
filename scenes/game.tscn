@@ -1,14 +1,14 @@
 [gd_scene load_steps=15 format=4 uid="uid://cff44koxijney"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1_b2qwq"]
+[ext_resource type="Script" uid="uid://baqn67unho7q" path="res://scripts/game.gd" id="1_b2qwq"]
 [ext_resource type="PackedScene" uid="uid://c384vj2wxxq3y" path="res://scenes/player.tscn" id="1_jtqyv"]
 [ext_resource type="TileSet" uid="uid://dggl0x6psqfh0" path="res://tilesets/universal.tres" id="2_f1hjc"]
 [ext_resource type="PackedScene" uid="uid://br33wjq8ex42" path="res://scenes/level_exit.tscn" id="3_ufog3"]
 [ext_resource type="PackedScene" uid="uid://c0f4q7j3qyt2k" path="res://scenes/horse.tscn" id="4_8ohwc"]
-[ext_resource type="Script" path="res://scripts/day_night_cycle.gd" id="5_httjd"]
+[ext_resource type="Script" uid="uid://b33igi0q2grx8" path="res://scripts/day_night_cycle.gd" id="5_httjd"]
 [ext_resource type="PackedScene" uid="uid://dch5elsggq6pb" path="res://scenes/lamp.tscn" id="7_3iybx"]
 [ext_resource type="PackedScene" uid="uid://bevbgj6unthgk" path="res://scenes/torch.tscn" id="7_r2c04"]
-[ext_resource type="Script" path="res://scripts/lamp.gd" id="8_e2k7l"]
+[ext_resource type="Script" uid="uid://bluf5mn42aof7" path="res://scripts/lamp.gd" id="8_e2k7l"]
 
 [sub_resource type="Gradient" id="Gradient_pa31o"]
 interpolation_mode = 2

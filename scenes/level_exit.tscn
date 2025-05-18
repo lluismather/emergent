@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://br33wjq8ex42"]
 
-[ext_resource type="Script" path="res://scripts/level_exit.gd" id="1_cjwty"]
+[ext_resource type="Script" uid="uid://dk1a47fxb7pv1" path="res://scripts/level_exit.gd" id="1_cjwty"]
 
 [node name="LevelExit" type="Area2D"]
 collision_mask = 2
