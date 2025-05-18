@@ -1,0 +1,101 @@
+[gd_scene load_steps=15 format=3 uid="uid://bevbgj6unthgk"]
+
+[ext_resource type="Texture2D" uid="uid://bkse8q0uuej6g" path="res://assets/base/Outdoor decoration/Big_Torch_Anim.png" id="1_bpra1"]
+[ext_resource type="Script" path="res://scripts/torch.gd" id="1_vlg17"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8grpu"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(1, 2, 15, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdlb7"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(17, 2, 15, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4asfv"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(33, 2, 15, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60q5r"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(49, 2, 15, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7j2o"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(65, 2, 15, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbluq"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(81, 2, 15, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_612r0"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(97, 2, 15, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1bpa"]
+atlas = ExtResource("1_bpra1")
+region = Rect2(113, 2, 15, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rnvg1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8grpu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdlb7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4asfv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60q5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w7j2o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbluq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_612r0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1bpa")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_3rseu"]
+offsets = PackedFloat32Array(0, 0.884615)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_m2spy"]
+gradient = SubResource("Gradient_3rseu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.90812, 0.151709)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sqkun"]
+size = Vector2(3, 3)
+
+[node name="Node2D" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_vlg17")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_rnvg1")
+frame_progress = 0.426823
+centered = false
+offset = Vector2(-8, -28)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, -14)
+texture = SubResource("GradientTexture2D_m2spy")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_sqkun")
