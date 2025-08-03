@@ -6,10 +6,16 @@ var update_timer = 0.0
 var update_frequency = 0.2  # Update 5 times per second
 
 func _ready():
+	# Check if debug UI should be visible
+	if not DebugConfig.is_ui_debug():
+		visible = false
+		set_process(false)
+		return
+	
 	# Get the debug label safely
 	debug_label = $Control/VBoxContainer/ScrollContainer/DebugLabel
 	if not debug_label:
-		print("Debug UI: Failed to find debug label")
+		DebugConfig.debug_print("Failed to find debug label", "ui")
 		return
 		
 	debug_label.text = "Initializing..."
@@ -22,9 +28,9 @@ func _find_player():
 	var players = get_tree().get_nodes_in_group("players")
 	if players.size() > 0:
 		player_ref = players[0]
-		print("Debug UI connected to player: %s" % player_ref.name)
+		DebugConfig.debug_print("Connected to player: %s" % player_ref.name, "ui")
 	else:
-		print("Debug UI: No players found, retrying...")
+		DebugConfig.debug_print("No players found, retrying...", "ui")
 		# Retry after a short delay
 		await get_tree().create_timer(0.5).timeout
 		_find_player()

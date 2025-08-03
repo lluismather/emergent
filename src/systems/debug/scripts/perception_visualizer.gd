@@ -6,6 +6,12 @@ var circle_width = 2.0
 var circle_alpha = 0.3
 
 func _ready():
+	# Check if perception visualization should be enabled
+	if not DebugConfig.is_perception_visual_debug():
+		visible = false
+		set_process(false)
+		return
+	
 	# Find the player to follow
 	await get_tree().process_frame
 	_find_target()
@@ -14,9 +20,9 @@ func _find_target():
 	var players = get_tree().get_nodes_in_group("players")
 	if players.size() > 0:
 		target_character = players[0]  # Follow the player
-		print("Perception visualizer following player")
+		DebugConfig.debug_print("Perception visualizer following player: %s" % target_character.name, "perception")
 	else:
-		print("Perception visualizer: No players found")
+		DebugConfig.debug_print("No players found for perception visualizer", "perception")
 		# Don't retry, just stay inactive
 
 func _process(_delta):

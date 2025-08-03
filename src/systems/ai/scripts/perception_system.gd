@@ -39,7 +39,10 @@ func initialize(npc: CharacterBody2D, world: Node2D = null):
 		if day_night_cycle:
 			day_night_cycle.time_tick.connect(_on_time_tick)
 	
-	print("[PerceptionMCP] Initialized for NPC: %s" % npc.name)
+	if DebugConfig and DebugConfig.is_perception_debug():
+		DebugConfig.debug_print("Initialized for NPC: %s" % npc.name, "perception")
+	elif not DebugConfig:
+		print("[PerceptionMCP] Initialized for NPC: %s" % npc.name)
 
 func update(delta: float):
 	if not server_active or not owner_npc:
