@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=4]
+
+[ext_resource type="Script" path="res://scripts/spells/growing_spell.gd" id="1"]
+
+[node name="GrowingSpell" type="Area2D"]
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrowingSpell"]
+shape = CircleShape2D {
+  radius = 64
+}
+
+[node name="Timer" type="Timer" parent="GrowingSpell"]
+one_shot = true
