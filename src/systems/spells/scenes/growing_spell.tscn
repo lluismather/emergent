@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=4]
 
-[ext_resource type="Script" path="res://scripts/spells/growing_spell.gd" id="1"]
+[ext_resource type="Script" path="res://src/systems/spells/scripts/growing_spell.gd" id="1"]
 
 [node name="GrowingSpell" type="Area2D"]
 script = ExtResource( 1 )

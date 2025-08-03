@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c8s6g0r5v1xae"]
 
-[ext_resource type="Script" path="res://scripts/perception_visualizer.gd" id="1_pvis"]
+[ext_resource type="Script" path="res://src/systems/debug/scripts/perception_visualizer.gd" id="1_pvis"]
 
 [node name="PerceptionVisualizer" type="Node2D"]
 z_index = 10

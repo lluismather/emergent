@@ -1,6 +1,6 @@
 [gd_scene load_steps=42 format=3 uid="uid://bdqfg8yxxdq30"]
 
-[ext_resource type="Script" path="res://scripts/npc.gd" id="1_xyz123"]
+[ext_resource type="Script" path="res://src/entities/npcs/scripts/npc.gd" id="1_xyz123"]
 [ext_resource type="Texture2D" uid="uid://c1hvpumk1v07q" path="res://assets/base/Player/Player_New/Player_Anim/Player_Idle_Run_Death_Anim.png" id="2_abc456"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gww70"]

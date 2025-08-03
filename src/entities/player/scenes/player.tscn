@@ -1,7 +1,7 @@
 [gd_scene load_steps=41 format=3 uid="uid://c384vj2wxxq3y"]
 
 [ext_resource type="Texture2D" uid="uid://c1hvpumk1v07q" path="res://assets/base/Player/Player_New/Player_Anim/Player_Idle_Run_Death_Anim.png" id="1_2dy8p"]
-[ext_resource type="Script" uid="uid://ktacd7mhypw1" path="res://scripts/player.gd" id="1_b4xr8"]
+[ext_resource type="Script" uid="uid://ktacd7mhypw1" path="res://src/entities/player/scripts/player.gd" id="1_b4xr8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gww70"]
 atlas = ExtResource("1_2dy8p")

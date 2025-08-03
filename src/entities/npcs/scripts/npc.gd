@@ -178,7 +178,7 @@ class PerceptionSystem:
 	
 	func initialize(npc: CharacterBody2D):
 		# Load the perception system dynamically
-		var PerceptionSystemClass = load("res://scripts/perception_system.gd")
+		var PerceptionSystemClass = load("res://src/systems/ai/scripts/perception_system.gd")
 		perception_mcp = PerceptionSystemClass.new()
 		perception_mcp.initialize(npc)
 		active = true

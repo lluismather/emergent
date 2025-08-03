@@ -18,7 +18,7 @@ func _ready():
 	_initialize_perception_system()
 
 func _initialize_perception_system():
-	var PerceptionSystemClass = load("res://scripts/perception_system.gd")
+	var PerceptionSystemClass = load("res://src/systems/ai/scripts/perception_system.gd")
 	perception_system = PerceptionSystemClass.new()
 	perception_system.initialize(self)
 
