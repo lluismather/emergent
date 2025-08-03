@@ -6,13 +6,15 @@ extends Node2D
 var light_scale = 1.0
 
 func _ready():
+	add_to_group("light_sources")
+	add_to_group("perceivable_objects")
 	animated_sprite.play()
 	light.visible = true
 	light.texture_scale = light_scale
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	light.texture_scale = light_scale
 	flicker()
 

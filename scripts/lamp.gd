@@ -7,6 +7,8 @@ extends Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("day_night_responders")
+	add_to_group("light_sources")
+	add_to_group("perceivable_objects")
 	light.visible = false
 	animated_sprite.stop()
 

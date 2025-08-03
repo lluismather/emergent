@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cff44koxijney"]
+[gd_scene load_steps=17 format=4 uid="uid://cff44koxijney"]
 
 [ext_resource type="Script" uid="uid://baqn67unho7q" path="res://scripts/game.gd" id="1_b2qwq"]
 [ext_resource type="PackedScene" uid="uid://c384vj2wxxq3y" path="res://scenes/player.tscn" id="1_jtqyv"]
@@ -9,6 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://dch5elsggq6pb" path="res://scenes/lamp.tscn" id="7_3iybx"]
 [ext_resource type="PackedScene" uid="uid://bevbgj6unthgk" path="res://scenes/torch.tscn" id="7_r2c04"]
 [ext_resource type="Script" uid="uid://bluf5mn42aof7" path="res://scripts/lamp.gd" id="8_e2k7l"]
+[ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="9_npc123"]
+[ext_resource type="PackedScene" uid="uid://bj4kl5m6n7o8p9" path="res://scenes/debug_ui.tscn" id="10_debug"]
+[ext_resource type="PackedScene" uid="uid://c8s6g0r5v1xae" path="res://scenes/perception_visualizer.tscn" id="11_pvis"]
 
 [sub_resource type="Gradient" id="Gradient_pa31o"]
 interpolation_mode = 2
@@ -47,6 +50,10 @@ limit_top = -800
 limit_right = 800
 limit_bottom = 800
 limit_smoothed = true
+
+[node name="NPC_Knight" parent="." instance=ExtResource("9_npc123")]
+z_index = 1
+position = Vector2(400, 600)
 
 [node name="Map" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -230,3 +237,8 @@ shape = SubResource("WorldBoundaryShape2D_8mcb7")
 z_index = 1
 y_sort_enabled = true
 position = Vector2(-317, -83)
+
+[node name="DebugUI" parent="." instance=ExtResource("10_debug")]
+
+[node name="PerceptionVisualizer" parent="." instance=ExtResource("11_pvis")]
+

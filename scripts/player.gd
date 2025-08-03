@@ -6,6 +6,22 @@ const JUMP_VELOCITY = -100.0
 
 @onready var animated_sprite = $AnimatedSprite2D
 
+# Add perception system to player
+var perception_system = null
+
+func _ready():
+	# Add to groups so debug UI can find us
+	add_to_group("players")
+	add_to_group("day_night_responders")
+	
+	# Initialize perception system
+	_initialize_perception_system()
+
+func _initialize_perception_system():
+	var PerceptionSystemClass = load("res://scripts/perception_system.gd")
+	perception_system = PerceptionSystemClass.new()
+	perception_system.initialize(self)
+
 func _process(_delta):
 	var direction = Vector2()
 	var movement_speed = 1
@@ -57,3 +73,12 @@ func _process(_delta):
 	direction = direction.normalized()
 	velocity = direction * SPEED * movement_speed
 	move_and_slide()
+	
+	# Update perception system
+	if perception_system:
+		perception_system.update(_delta)
+
+func on_day_night_cycle(state):
+	# Pass day/night changes to perception system
+	if perception_system:
+		perception_system.on_time_change(state)

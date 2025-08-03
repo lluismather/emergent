@@ -18,12 +18,14 @@ var night_time = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("day_night_responders")
+	add_to_group("animals")
+	add_to_group("perceivable_objects")
 	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
 	pick_new_destination()
 	
-func on_day_night_cycle(state):
+func on_day_night_cycle(cycle_state):
 	target_position = position
-	night_time = (state == "night")
+	night_time = (cycle_state == "night")
 	
 
 func _on_animation_finished():
