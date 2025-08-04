@@ -1,3 +1,56 @@
 # Godot 4+ specific ignores
 .godot/
+.import/
 /android/
+
+# Build outputs and exports
+builds/
+exports/
+*.dmg
+*.zip
+*.exe
+*.apk
+*.ipa
+*.tmp
+
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Audio files (keep source, ignore large processed files)
+audio/*.mp3
+audio/*.wav
+audio/*.ogg
+!audio/*.import
+# Keep small audio files under 1MB if needed
+# audio/sfx/
+# audio/small/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+*.DS_Store
+*.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# User-specific files
+override.cfg
+*.user
