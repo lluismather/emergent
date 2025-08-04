@@ -3,12 +3,8 @@ extends CharacterBody2D
 const SPEED = 100.0
 
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var hunger_bar = $StatsUI/HungerBar
-@onready var energy_bar = $StatsUI/EnergyBar
-@onready var social_bar = $StatsUI/SocialBar
-@onready var purpose_bar = $StatsUI/PurposeBar
 
-# Core NPC subsystems (all empty shells ready for implementation)
+# Core NPC subsystems
 var perception_system = PerceptionSystem.new()
 var needs_system = NeedsSystem.new()
 var personality_system = PersonalitySystem.new()
@@ -17,7 +13,7 @@ var goals_system = GoalsSystem.new()
 var planning_system = PlanningSystem.new()
 var social_system = SocialSystem.new()
 var identity_system = IdentitySystem.new()
-var execution_system = ExecutionSystem.new()
+var execution_system: ExecutionSystem = null  # Will be created as component
 var emotion_system = EmotionSystem.new()
 var reputation_system = ReputationSystem.new()
 var resource_system = ResourceSystem.new()
@@ -44,7 +40,7 @@ func _ready():
 	print("NPC initialized: ", npc_name, " (", npc_role, ")")
 
 func _initialize_all_systems():
-	# Initialize each system - currently empty but ready for implementation
+	# Initialize each system
 	perception_system.initialize(self)
 	needs_system.initialize(self)
 	personality_system.initialize(self)
@@ -53,7 +49,20 @@ func _initialize_all_systems():
 	planning_system.initialize(self)
 	social_system.initialize(self)
 	identity_system.initialize(self)
+	
+	# Create ExecutionSystem as a component
+	execution_system = ExecutionSystem.new()
+	execution_system.name = "ExecutionSystem"
+	add_child(execution_system)
 	execution_system.initialize(self)
+	
+	# Connect to ExecutionSystem signals
+	execution_system.action_started.connect(_on_action_started)
+	execution_system.action_completed.connect(_on_action_completed)
+	execution_system.action_interrupted.connect(_on_action_interrupted)
+	execution_system.execution_status_changed.connect(_on_execution_status_changed)
+	execution_system.movement_update.connect(_on_movement_update)
+	
 	emotion_system.initialize(self)
 	reputation_system.initialize(self)
 	resource_system.initialize(self)
@@ -71,21 +80,41 @@ func _process(delta):
 	if inflection_system.should_make_decision():
 		_make_decision()
 	
-	# Execute current action
-	execution_system.execute(delta)
+	# ExecutionSystem handles its own processing as a component
 	
 	# Update visual representation
 	_update_animation()
-	_update_stats_ui()
 
 func _make_decision():
 	# This will eventually coordinate with MCP servers and LLM
 	# For now, it's empty
 	pass
 
+# ExecutionSystem signal handlers
+func _on_action_started(action_type: String, action_data: Dictionary):
+	if DebugConfig and DebugConfig.is_ai_debug():
+		DebugConfig.debug_print("NPC %s started action: %s" % [npc_name, action_type], "ai")
+
+func _on_action_completed(action_type: String, success: bool, result: Dictionary):
+	if DebugConfig and DebugConfig.is_ai_debug():
+		DebugConfig.debug_print("NPC %s completed action: %s (success: %s)" % [npc_name, action_type, success], "ai")
+
+func _on_action_interrupted(action_type: String, reason: String):
+	if DebugConfig and DebugConfig.is_ai_debug():
+		DebugConfig.debug_print("NPC %s action interrupted: %s (%s)" % [npc_name, action_type, reason], "ai")
+
+func _on_execution_status_changed(status: String, current_action: Dictionary, queue_size: int):
+	# Update current_action for compatibility
+	current_action = current_action
+
+func _on_movement_update(position: Vector2, velocity: Vector2, is_moving: bool):
+	# This is called when the ExecutionSystem updates movement
+	# We can use this for additional processing if needed
+	pass
+
 func _update_animation():
-	# Basic animation system (using existing player animations)
-	if execution_system.is_moving():
+	# Basic animation system using ExecutionSystem data
+	if execution_system and execution_system.is_moving():
 		var move_velocity = execution_system.get_velocity()
 		if abs(move_velocity.x) > abs(move_velocity.y):
 			animated_sprite.animation = "run_right_left"
@@ -105,21 +134,36 @@ func _update_animation():
 			elif animated_sprite.animation == "run_up":
 				animated_sprite.animation = "idle_up"
 
-func _update_stats_ui():
-	# Update progress bars from needs system
-	if hunger_bar and needs_system.has_need("hunger"):
-		hunger_bar.value = needs_system.get_need_value("hunger") * 100
-	if energy_bar and needs_system.has_need("energy"):
-		energy_bar.value = needs_system.get_need_value("energy") * 100
-	if social_bar and needs_system.has_need("social"):
-		social_bar.value = needs_system.get_need_value("social") * 100
-	if purpose_bar and needs_system.has_need("purpose"):
-		purpose_bar.value = needs_system.get_need_value("purpose") * 100
-
 func on_day_night_cycle(state):
 	# Pass to relevant systems
 	perception_system.on_time_change(state)
 	needs_system.on_time_change(state)
+
+# Public API for controlling NPC actions
+func move_to(target_position: Vector2, priority: ExecutionSystem.Priority = ExecutionSystem.Priority.NORMAL):
+	if execution_system:
+		execution_system.queue_move_to(target_position, priority)
+
+func wait_for(duration: float, priority: ExecutionSystem.Priority = ExecutionSystem.Priority.NORMAL):
+	if execution_system:
+		execution_system.queue_wait(duration, priority)
+
+func interact_with(target_id: String, duration: float = 2.0, priority: ExecutionSystem.Priority = ExecutionSystem.Priority.NORMAL):
+	if execution_system:
+		execution_system.queue_interact_with(target_id, duration, priority)
+
+func clear_all_actions():
+	if execution_system:
+		execution_system.clear_action_queue()
+
+func interrupt_current_action(reason: String = "Manual interrupt"):
+	if execution_system:
+		execution_system.interrupt_current_action(reason)
+
+func get_execution_status() -> Dictionary:
+	if execution_system:
+		return execution_system.get_execution_state()
+	return {}
 
 # Export current NPC state as comprehensive JSON
 func get_full_state() -> Dictionary:
@@ -136,7 +180,7 @@ func get_full_state() -> Dictionary:
 		"planning": planning_system.get_state(),
 		"social_norms": reputation_system.get_state(),
 		"resource_inventory": resource_system.get_state(),
-		"execution_state": execution_system.get_state(),
+		"execution_state": execution_system.get_execution_state() if execution_system else {},
 		"decision_cache": planning_system.get_decision_cache(),
 		"inflection_triggers": inflection_system.get_state(),
 		"theory_of_mind_response": theory_of_mind_system.get_latest_response(),
@@ -162,7 +206,7 @@ func _count_active_systems() -> int:
 	if planning_system.is_active(): count += 1
 	if social_system.is_active(): count += 1
 	if identity_system.is_active(): count += 1
-	if execution_system.is_active(): count += 1
+	if execution_system and execution_system.is_active(): count += 1
 	if emotion_system.is_active(): count += 1
 	if reputation_system.is_active(): count += 1
 	if resource_system.is_active(): count += 1
@@ -376,40 +420,6 @@ class IdentitySystem:
 			"status": status,
 			"skills": skills,
 			"cultural_background": cultural_background
-		}
-	
-	func is_active() -> bool:
-		return active
-
-class ExecutionSystem:
-	var npc_ref: CharacterBody2D
-	var location = ""
-	var path = []
-	var status = ""
-	var interruptions = []
-	var velocity = Vector2.ZERO
-	var moving = false
-	var active = false
-	
-	func initialize(npc: CharacterBody2D):
-		npc_ref = npc
-		active = true
-	
-	func execute(_delta):
-		pass
-	
-	func is_moving() -> bool:
-		return moving
-	
-	func get_velocity() -> Vector2:
-		return velocity
-	
-	func get_state() -> Dictionary:
-		return {
-			"location": location,
-			"path": path,
-			"status": status,
-			"interruptions": interruptions
 		}
 	
 	func is_active() -> bool:

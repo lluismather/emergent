@@ -24,12 +24,14 @@ DebugConfig="*res://src/core/scripts/debug_config.gd"
 general/enabled=false
 general/verbose=false
 
-systems/perception=false
-systems/perception_visual=false
-systems/ui=false
+systems/perception=true
+; debugging
+systems/perception_visual=true
+systems/ui=true
+; /debugging
 systems/ai=false
 systems/spells=false
-systems/environment=false
+systems/environment=true
 
 [display]
 
