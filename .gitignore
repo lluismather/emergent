@@ -54,3 +54,6 @@ Thumbs.db
 # User-specific files
 override.cfg
 *.user
+
+# Claude Code settings (keep local only)
+.claude/
