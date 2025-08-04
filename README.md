@@ -103,6 +103,15 @@ Each NPC contains a comprehensive set of AI subsystems:
 - **Debug**: Environment variable configuration with real-time UI
 - **Integration**: MCP (Model Context Protocol) compatible for AI model integration
 
+## 📦 Asset Requirements
+
+This project requires the [Cute Fantasy RPG asset bundle](https://kenmi-art.itch.io/cute-fantasy-rpg) for visual assets. The assets are not included in this repository due to licensing requirements.
+
+**Setup Instructions:**
+1. Purchase and download the asset bundle from itch.io
+2. Extract the assets to the `assets/` directory in your local copy
+3. The project will then have all required visual elements
+
 ## 🔍 Debug System
 
 Comprehensive debugging system with environment variable control:

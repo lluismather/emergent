@@ -1,0 +1,8 @@
+# Ignore all files in the assets directory
+# This preserves the directory structure in git while excluding copyrighted content
+# 
+# Assets are from: https://kenmi-art.itch.io/cute-fantasy-rpg/devlog/936070/cute-fantasy-update-10-caves-rivers
+# Please download the asset bundle locally to use this project
+
+*
+!.gitignore

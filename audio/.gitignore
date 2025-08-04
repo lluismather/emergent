@@ -1,0 +1,5 @@
+# Ignore all files in the audio directory
+# This preserves the directory structure in git while excluding large audio files
+
+*
+!.gitignore
