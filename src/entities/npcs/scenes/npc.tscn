@@ -1,7 +1,8 @@
-[gd_scene load_steps=42 format=3 uid="uid://bdqfg8yxxdq30"]
+[gd_scene load_steps=43 format=3 uid="uid://bdqfg8yxxdq30"]
 
 [ext_resource type="Script" path="res://src/entities/npcs/scripts/npc.gd" id="1_xyz123"]
-[ext_resource type="Texture2D" uid="uid://c1hvpumk1v07q" path="res://assets/base/Player/Player_New/Player_Anim/Player_Idle_Run_Death_Anim.png" id="2_abc456"]
+[ext_resource type="Texture2D" uid="uid://c1hvpumk1v07q" path="res://assets/old/Player_Merged/Player_New/Player_Anim/Player_Idle_Run_Death_Anim.png" id="2_abc456"]
+[ext_resource type="Script" path="res://src/systems/ai/scripts/decision_manager.gd" id="3_decision"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gww70"]
 atlas = ExtResource("2_abc456")
@@ -294,8 +295,8 @@ radius = 3.0
 [node name="NPC" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_xyz123")
-npc_name = "Harry"
-npc_role = "Wizard"
+npc_name = "Sir Gareth"
+npc_role = "Knight"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
@@ -308,5 +309,8 @@ autoplay = "idle_down"
 y_sort_enabled = true
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_npc")
+
+[node name="DecisionManager" type="Node" parent="."]
+script = ExtResource("3_decision")
 
 

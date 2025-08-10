@@ -1,17 +1,17 @@
-[gd_scene load_steps=17 format=4 uid="uid://cff44koxijney"]
+[gd_scene load_steps=18 format=4 uid="uid://cff44koxijney"]
 
 [ext_resource type="Script" uid="uid://baqn67unho7q" path="res://src/core/scripts/game.gd" id="1_b2qwq"]
 [ext_resource type="PackedScene" uid="uid://c384vj2wxxq3y" path="res://src/entities/player/scenes/player.tscn" id="1_jtqyv"]
 [ext_resource type="TileSet" uid="uid://dggl0x6psqfh0" path="res://tilesets/universal.tres" id="2_f1hjc"]
 [ext_resource type="PackedScene" uid="uid://br33wjq8ex42" path="res://src/entities/environment/scenes/level_exit.tscn" id="3_ufog3"]
-[ext_resource type="PackedScene" uid="uid://c0f4q7j3qyt2k" path="res://src/entities/animals/scenes/horse.tscn" id="4_8ohwc"]
 [ext_resource type="Script" uid="uid://b33igi0q2grx8" path="res://src/core/scripts/day_night_cycle.gd" id="5_httjd"]
 [ext_resource type="PackedScene" uid="uid://dch5elsggq6pb" path="res://src/entities/environment/scenes/lamp.tscn" id="7_3iybx"]
 [ext_resource type="PackedScene" uid="uid://bevbgj6unthgk" path="res://src/entities/environment/scenes/torch.tscn" id="7_r2c04"]
 [ext_resource type="Script" uid="uid://bluf5mn42aof7" path="res://src/entities/environment/scripts/lamp.gd" id="8_e2k7l"]
-[ext_resource type="PackedScene" path="res://src/entities/npcs/scenes/npc.tscn" id="9_npc123"]
-[ext_resource type="PackedScene" uid="uid://bj4kl5m6n7o8p9" path="res://src/systems/debug/scenes/debug_ui.tscn" id="10_debug"]
+[ext_resource type="PackedScene" uid="uid://bdqfg8yxxdq30" path="res://src/entities/npcs/scenes/npc.tscn" id="9_npc123"]
+[ext_resource type="PackedScene" uid="uid://bl21n02v0hmeu" path="res://src/systems/debug/scenes/debug_ui.tscn" id="10_debug"]
 [ext_resource type="PackedScene" uid="uid://c8s6g0r5v1xae" path="res://src/systems/debug/scenes/perception_visualizer.tscn" id="11_pvis"]
+[ext_resource type="PackedScene" uid="uid://bh5ssras8n2tr" path="res://src/ui/scenes/background_music.tscn" id="12_music"]
 
 [sub_resource type="Gradient" id="Gradient_pa31o"]
 interpolation_mode = 2
@@ -36,6 +36,9 @@ script = ExtResource("1_b2qwq")
 color = Color(0.317188, 0.184487, 0.798572, 1)
 script = ExtResource("5_httjd")
 gradient = SubResource("GradientTexture1D_dyfof")
+
+[node name="BackgroundMusic" parent="." instance=ExtResource("12_music")]
+stream = null
 
 [node name="Player" parent="." instance=ExtResource("1_jtqyv")]
 z_index = 1
@@ -233,12 +236,6 @@ position = Vector2(0, 7)
 rotation = 3.14159
 shape = SubResource("WorldBoundaryShape2D_8mcb7")
 
-[node name="Horse" parent="." instance=ExtResource("4_8ohwc")]
-z_index = 1
-y_sort_enabled = true
-position = Vector2(-317, -83)
-
 [node name="DebugUI" parent="." instance=ExtResource("10_debug")]
 
 [node name="PerceptionVisualizer" parent="." instance=ExtResource("11_pvis")]
-

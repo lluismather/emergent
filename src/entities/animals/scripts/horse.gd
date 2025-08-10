@@ -21,11 +21,18 @@ func _ready():
 	add_to_group("animals")
 	add_to_group("perceivable_objects")
 	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	# Ensure normal playback speed
+	animated_sprite.speed_scale = 1.0
 	pick_new_destination()
 	
 func on_day_night_cycle(cycle_state):
 	target_position = position
+	var was_night = night_time
 	night_time = (cycle_state == "night")
+	
+	# Handle day transition - wake up if sleeping
+	if was_night and not night_time and state == State.SLEEPING:
+		enter_nod_on_wake_state()
 	
 
 func _on_animation_finished():
@@ -59,7 +66,8 @@ func _process(delta):
 					else:
 						pick_new_destination()
 			State.SLEEPING:
-				enter_stand_up_state()
+				# Only wake up during day transitions - normal sleep cycle handled in enter_sleep_state()
+				pass
 
 func pick_new_destination ():
 	target_position = Vector2(
@@ -69,6 +77,7 @@ func pick_new_destination ():
 	state = State.WALKING;
 	set_direction();
 	animated_sprite.animation = "walk_left_right";
+	animated_sprite.speed_scale = 1.0;
 	animated_sprite.play();
 	
 func move_toward_target (delta):
@@ -87,6 +96,7 @@ func set_direction():
 func enter_idle_state():
 	state = State.IDLE
 	animated_sprite.animation = "idle"
+	animated_sprite.speed_scale = 1.0
 	animated_sprite.play()
 	idle_timer = 0.0
 	idle_duration = randf_range(3.0, 6.0)
@@ -94,30 +104,34 @@ func enter_idle_state():
 func enter_lie_down_state():
 	state = State.LIE_DOWN
 	animated_sprite.animation = "lie_down"
+	animated_sprite.speed_scale = 1.0
 	animated_sprite.play()
 	
 func enter_nod_off_state():
 	state = State.NOD_OFF
 	animated_sprite.animation = "nod_off_wake_up"
+	animated_sprite.speed_scale = 1.0
 	animated_sprite.play()
 	
 func enter_sleep_state():
 	state = State.SLEEPING
 	animated_sprite.animation = "sleep"
+	animated_sprite.speed_scale = 1.0
 	animated_sprite.play()
 	if not night_time:
 		await get_tree().create_timer(randf_range(5.0, 10.0)).timeout
-		enter_stand_up_state()
+		enter_nod_on_wake_state()
 	
 func enter_nod_on_wake_state():
 	state = State.NOD_ON_WAKE
 	animated_sprite.animation = "nod_off_wake_up"
 	animated_sprite.play()
-	animated_sprite.playback_speed = -1.0
-	animated_sprite.frame = animated_sprite.sprite_frames.get_frame_count("nod_off_wake_up") - 1
+	# Reset playback speed and play normally - the animation should be designed to work forward
+	animated_sprite.speed_scale = 1.0
 	
 func enter_stand_up_state():
 	state = State.STAND_UP
 	animated_sprite.animation = "stand_up"
+	animated_sprite.speed_scale = 1.0
 	animated_sprite.play()
 	

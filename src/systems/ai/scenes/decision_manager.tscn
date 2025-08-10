@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqxvj8yq8yq8y"]
+
+[ext_resource type="Script" path="res://src/systems/ai/scripts/decision_manager.gd" id="1_decision"]
+
+[node name="DecisionManager" type="Node"]
+script = ExtResource("1_decision")
